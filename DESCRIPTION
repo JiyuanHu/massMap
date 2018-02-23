@@ -1,9 +1,13 @@
 Package: massMap
-Title: What the Package Does (one line, title case)
-Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-Depends: R (>= 3.3.0)
-License: What license is it under?
+Title: A two-stage microbial association mapping framework with advanced FDR control
+Version: 1.0
+Date: 2018-02-22
+Author: Jiyuan Hu
+Maintainer: Jiyuan Hu <jiyuan_hu@fudan.edu.cn>
+Description: This package is developed to powerfully discover trait-associated taxa at the taget rank,such as Genus or species. A two-stage microbial association mapping framework (massMap) is implemented which uses grouping information from the taxonomic tree to strengthen statistical power in association tests at the target rank. MassMap first screens the association of taxonomic groups at a pre-selected higher taxonomic rank using a powerful microbial group test OMiAT. Then it proceeds to test the association for each candidate taxon at the target rank within the significant taxonomic groups identified in the first stage. Hierarchical BH (HBH) and selected subset testing (SST) procedures are evaluated to control the FDR for the two-stage structured tests. Both simulation studies and real data applications demonstrated marked statistical power improvement of massMap over competing methods.
+Depends: dirmult, phyloseq, robustbase, robCompositions, BiasedUrn, CompQuadForm, MiRKAT, GUniFrac, ecodist, R (>= 3.3.0)
+License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/JiyuanHu/massMap
+BugReports: http://github.com/JiyuanHu/massMap/issues
