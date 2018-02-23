@@ -21,10 +21,10 @@ function(d,mode,alpha=0.05,target.rank){
 	p.HBH = res.HBH.two.stage[,3],
 	p.SST = res.SST[,3])
 	rownames(res.target) = rownames(res.traditional) 
-	res.target$status.BH = ifelse(p.BH<alpha,1,0)
-	res.target$status.HBH = ifelse(p.HBH<alpha,1,0)
+	res.target$status.BH = ifelse(res.target$p.BH<alpha,1,0)
+	res.target$status.HBH = ifelse(res.target$p.HBH<alpha,1,0)
 	res.target$status.HBH[is.na(res.target$status.HBH)] = 0
-	res.target$status.SST = ifelse(p.HBH<alpha,1,0)
+	res.target$status.SST = ifelse(res.target$p.SST<alpha,1,0)
 	res.target$status.SST[is.na(res.target$status.SST)] = 0
   d$res.target = res.target
   d
