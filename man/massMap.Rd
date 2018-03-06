@@ -10,6 +10,7 @@ This function detects the trait-associated taxa at the specified taget rank. We 
 massMap(X, Y, otu.tab, tax.tab, tree, outcome.trait = outcome.traits,
 	screening.rank = ranks, target.rank = ranks,
 	alpha = 0.05, n.perm = 10000)
+
 outcome.traits
 #c("binary", "continuous")
 ranks
@@ -76,19 +77,22 @@ Numver of permutations in order to calculate p-values. The default setting 1e4 i
 HU J, Koh H, He L, Liu M, Blaser J M, Li H(2018). A two-stage microbial association mapping framework with advanced FDR control.
 }
 \author{
-Jiyuan Hu
+Jiyuan Hu, Hyunwook Koh, Linchen He, Menghan Liu, Martin J. Blaser, Huilin Li.
 }
 
 \examples{
-data(X)#covariates of age and gender
-data(ABH)#the antibiotic history of 100 subjects
-data(otu.tab)# the otu table of microbiome data for 100 subjects and 90 species.
-data(tax.tab)#the taxonomy alignment of 90 species
-data(tree) #the phylogenetic tree of the microbiome data
+require(massMap)
+data(phy)
+map = as.data.frame(sample_data(phy))
+X = map[,c('age','gender')] # a data frame, each element could either numeric or factor.
+Y = map[['ABH']]#a vector instead of a data frame.
+otu.tab = otu_table(phy)
+tax.tab = tax_table(phy)
+tree = phy_tree(phy)
 ############
 # Not run:
-#res = massMap(X=X, Y=ABH,otu.tab=otu.tab,tax.tab=tax.tab,tree=tree,outcome.trait="binary",
-#  screening.rank = "Family", target.rank="Species",alpha=0.2,n.perm=1e4)
+#res = massMap(X=X, Y=Y,otu.tab=otu.tab,tax.tab=tax.tab,tree=tree,outcome.trait="binary",
+#              screening.rank = "Family", target.rank="Species",alpha=0.05,n.perm=1e4)
 }
 \keyword{ two-stage}
 
