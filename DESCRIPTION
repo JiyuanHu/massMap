@@ -1,11 +1,11 @@
 Package: massMap
-Title: A two-stage microbial association mapping framework with advanced FDR control
-Version: 1.0
-Date: 2018-02-22
+Title: massMap: a two-stage microbial association mapping framework with advanced FDR control
+Version: 2.0
+Date: 2018-04-04
 Author: Jiyuan Hu, Hyunwook Koh, Linchen He, Menghan Liu, Martin J. Blaser, Huilin Li.
 Maintainer: Jiyuan Hu <Jiyuan.Hu@nyumc.org>
-Description: This package is developed to powerfully discover trait-associated taxa at the taget rank,such as Genus or species. A two-stage microbial association mapping framework (massMap) is implemented which uses grouping information from the taxonomic tree to strengthen statistical power in association tests at the target rank. MassMap first screens the association of taxonomic groups at a pre-selected higher taxonomic rank using a powerful microbial group test OMiAT. Then it proceeds to test the association for each candidate taxon at the target rank within the significant taxonomic groups identified in the first stage. Hierarchical BH (HBH) and selected subset testing (SST) procedures are evaluated to control the FDR for the two-stage structured tests. Both simulation studies and real data applications demonstrated marked statistical power improvement of massMap over competing methods.
-Depends: dirmult, phyloseq, robustbase, robCompositions, BiasedUrn, CompQuadForm, MiRKAT, GUniFrac, ecodist, R (>= 3.3.0)
+Description: This package is developed to powerfully discover trait-associated taxa at the taget rank, such as Genus or species. A two-stage microbial association mapping framework (massMap) is implemented which uses grouping information from the taxonomic tree to strengthen statistical power in association tests at the target rank. MassMap can apply to binary, continuous and survival traits. MassMap first screens the association of taxonomic groups at a pre-selected higher taxonomic rank using a powerful microbial group test OMiAT for the binary/continuous trait or optimal microbiome-based survival analysis tool OMiSA for the survival trait respectively. Then it proceeds to test the association for each candidate taxon at the target rank within the significant taxonomic groups identified in the first stage. Hierarchical BH (HBH) and selected subset testing (SST) procedures are evaluated to control the FDR for the two-stage structured tests. Both simulation studies and real data applications demonstrated marked statistical power improvement of massMap over competing methods.
+Depends: dirmult, phyloseq, robustbase, robCompositions, BiasedUrn, CompQuadForm, MiRKAT, GUniFrac, ecodist, survival, OMiSA, R (>= 3.3.0)
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true

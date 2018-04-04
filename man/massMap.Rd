@@ -7,21 +7,32 @@ The main function of the two-stage microbial association mapping framework.
 This function detects the trait-associated taxa at the specified taget rank. We recommend Family to be the screening rank. The results of Hierarchical Benjamini-Hochberge (HBH), selected subset testing with BH procedures (SST) and the traditional one-stage BH procedure are reported.
 }
 \usage{
+##binary or continuous trait
 massMap(X, Y, otu.tab, tax.tab, tree, outcome.trait = outcome.traits,
-	screening.rank = ranks, target.rank = ranks,
-	alpha = 0.05, n.perm = 10000)
+	screening.rank = "family", target.rank = ranks,
+	alpha = 0.05, n.perm = 1e4)
+##survival trait
+massMap(X, obstime, delta, otu.tab, tax.tab, tree, outcome.trait = outcome.traits,
+	screening.rank= "family", target.rank= ranks,
+	alpha=0.05,n.perm=1e4)
 
 outcome.traits
-#c("binary", "continuous")
+#c("binary", "continuous", "survival")
 ranks
-#c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species", "OTU")
+#c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species", "OTU")
 }
 \arguments{
   \item{X}{
 A data frame which contains covariates to be adjusted in the regression model. The elements of the data frame must be numeric or factor. Set X = NULL if there is no covariate.
 }
   \item{Y}{
-A numeric vector of the outcome trait with length = sample size.
+A numeric vector of the binary/continuous outcome trait with length = sample size.
+}
+  \item{obstime}{
+A numeric vector of the survival time for the survival outcome trait with length = sample size.
+}
+   \item{delta}{
+A numeric vector of the status indicator for the survival outcome trait with length = sample size.
 }
   \item{otu.tab}{
 The taxonomic table of the microbiome data. Each row represents the taxonomy alignment of each taxon on Kingdom (Domain), Phylum, Class, Order, Family, Genus and Species respectively. Best if it is a class otu_table from package "phyloseq".
@@ -33,7 +44,7 @@ The OTU table of the microbiome data. Each row represents a subject and each col
 The phylogenetic tree of the microbiome data. Best if it is a class phylogenetic tree from package "phyloseq".
 }
   \item{outcome.trait}{
-Specify the type of outcome trait. Must be either "binary" or "continuous".
+Specify the type of outcome trait. Must be either "binary", "continuous"  or "survival".
 }
   \item{screening.rank}{
 Specify the screening rank. The recommend and default setting is "Family".
@@ -74,7 +85,11 @@ Numver of permutations in order to calculate p-values. The default setting 1e4 i
 }
 }
 \references{
-HU J, Koh H, He L, Liu M, Blaser J M, Li H(2018). A two-stage microbial association mapping framework with advanced FDR control.
+HU J, Koh H, He L, Liu M, Blaser M J, Li H (2018). A two-stage microbial association mapping framework with advanced FDR control. (submitted)
+
+Koh H, Livanos A E, Blaser M J, Li H (2018). A highly adaptive microbiome based association test for survival traits. BMC genomics, 19(1), 210.
+
+Koh H, Blaser M J and Li H (2017). A powerful microbiome-based association test and a microbial taxa discovery framework for comprehensive association mapping. Microbiome, 5(1), p.45.
 }
 \author{
 Jiyuan Hu, Hyunwook Koh, Linchen He, Menghan Liu, Martin J. Blaser, Huilin Li.
@@ -82,6 +97,8 @@ Jiyuan Hu, Hyunwook Koh, Linchen He, Menghan Liu, Martin J. Blaser, Huilin Li.
 
 \examples{
 require(massMap)
+###Illustration 1: binary trait
+##MassMap for the continuous trait is the same as the binary trait.
 data(phy)
 map = as.data.frame(sample_data(phy))
 X = map[,c('age','gender')] # a data frame, each element could either numeric or factor.
@@ -92,7 +109,29 @@ tree = phy_tree(phy)
 ############
 # Not run:
 #res = massMap(X=X, Y=Y,otu.tab=otu.tab,tax.tab=tax.tab,tree=tree,outcome.trait="binary",
-#              screening.rank = "Family", target.rank="Species",alpha=0.05,n.perm=1e4)
+#              screening.rank = "Family", target.rank="Species",alpha=0.05,n.perm=1e2)
+#res$res.screening ##The group association test at the screening rank
+#res$res.target ##The microbial association test at the target rank
+###
+
+###Illustration 2: survival trait
+##It requires the observed survival time (obstime) and the event indicator (delta) when running massMap for the surval trait
+data("MiSurv.Data",package= 'OMiSA')
+otu.tab <- otu_table(MiSurv.Data)
+tax.tab <- tax_table(MiSurv.Data)
+tree <- phy_tree(MiSurv.Data)
+map = sample_data(MiSurv.Data)
+obstime <- as.numeric(unlist(map[,1]))
+delta <- as.numeric(unlist(map[,2]))
+X = data.frame(map[,3:4])
+############
+# Not run:
+#res.Surv = massMap(X=X, obstime = obstime,delta= delta,otu.tab=otu.tab,tax.tab=tax.tab,
+#                   tree=tree,outcome.trait="survival",screening.rank = "Family",
+#                   target.rank="Species",alpha=0.05,n.perm=1e4)
+#res$res.screening ##The group association test at the screening rank
+#res$res.target ##The microbial association test at the target rank
+
 }
 \keyword{ two-stage}
 

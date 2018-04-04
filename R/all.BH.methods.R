@@ -1,5 +1,5 @@
 all.BH.methods <-
-function(d,mode,alpha=0.05,target.rank){
+function(d,alpha=0.05,target.rank){
   res.target = NULL;
   padj.meth= 'BH'
   name.pval.upper = 'pval.upper';name.pval.OTU = 'pval.OTU'

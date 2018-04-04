@@ -5,7 +5,7 @@
 A phyloseq-class experiment-level object example data.
 }
 \description{
-This data is a phyloseq-class object which contains the OTU table, sample data, taxonomy table and phylogenetic tree information. Details about the phyloseq class please see the R package "phyloseq".
+This data is a phyloseq-class object which contains the OTU table, sample data, taxonomy table and phylogenetic tree information. Details about the phyloseq class please see the R package "phyloseq". We are interested in the association between microbial taxa and the binary outcome trait antibiotic history (ABH) adjusting for age and gender.
 }
 \usage{data(phy)}
 \format{
@@ -22,6 +22,8 @@ phyloseq-class experiment-level object
 \item{\code{sample_data()}}{Sample Data:       [ 100 samples by 3 sample variables ]
 
 A data frame with 100 observations for one outcome variable ABH and two covariates age and gender.
+
+\code{ABH}: a numeric vector indicating the antibiotic history of each individual, where ABH =0 indicating the individual without antibiotic usage and ABH=1 indicating the individual having antibiotic usage in the preceding year;
 
 \code{age}: a numeric vector;
 

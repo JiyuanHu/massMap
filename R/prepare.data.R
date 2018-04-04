@@ -3,10 +3,10 @@ function(otu.tab,tax.tab,tree,X,Y,screening.rank = 'Family',target.rank='Species
   if(!is.numeric(Y)){
     stop('The response variable Y should be numeric. Please change the class if it is character or factor')
   }
-  taxonomic.ranks = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+  taxonomic.ranks = ranks
   ind= match(c(screening.rank,target.rank),taxonomic.ranks)
   if(sum(is.na(ind))){
-    stop('The screening rank and target rank should be either Domain,Phylum,Class,Order,Family,Genus or Species!') 
+    stop('The screening rank and target rank should be either Kingdom,Phylum,Class,Order,Family,Genus, Species or OTU!') 
   }else if(ind[1]>= ind[2]){
     stop('Screening rank must be higher than the target rank!') 
   }
