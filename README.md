@@ -14,5 +14,5 @@ Installation of massMap in R:
 A remark should be make that there requires some patience to install the package. It is a little bit tricky to install the dependent package "phyloseq". But once phyloseq is installed, it's very simply to install massMap.
 
 If you find this R package useful, please cite:
-**HU J, Koh H, He L, Liu M, Blaser M J, Li H(2018). A two-stage microbial association mapping framework with advanced FDR control. (submitted)**
+**Hu, Jiyuan, Hyunwook Koh, Linchen He, Menghan Liu, Martin J. Blaser, and Huilin Li. "A two-stage microbial association mapping framework with advanced FDR control." Microbiome 6, no. 1 (2018): 131.**
 

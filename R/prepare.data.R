@@ -1,5 +1,5 @@
 prepare.data <-
-function(otu.tab,tax.tab,tree,X,Y,screening.rank = 'Family',target.rank='Species'){
+function(otu.tab,is.count.otu.tab,tax.tab,tree,X,Y,screening.rank = 'Family',target.rank='Species'){
   if(!is.numeric(Y)){
     stop('The response variable Y should be numeric. Please change the class if it is character or factor')
   }
@@ -12,12 +12,20 @@ function(otu.tab,tax.tab,tree,X,Y,screening.rank = 'Family',target.rank='Species
   }
   tax.tab = preprocess4tax(tax.tab)
   if(target.rank != 'OTU'){
-	  phy = merge_phyloseq(otu_table(otu.tab),tax_table(tax.tab),tree)
+	  taxa_are_rows = length(Y)== ncol(otu.tab)
+	  if(is.null(tree)){
+		phy = merge_phyloseq(otu_table(otu.tab,taxa_are_rows= taxa_are_rows),tax_table(tax.tab))
+	  }else{
+		phy = merge_phyloseq(otu_table(otu.tab,taxa_are_rows= taxa_are_rows),
+	  tax_table(tax.tab),tree)
+	  }
 	  phy = tax_glom(phy, taxrank=target.rank)
 	  phy= filter_taxa(phy,function(x) sum(x > 0) > 0, TRUE)
 	  otu.tab = otu_table(phy)
 	  tax.tab = tax_table(phy)
-	  tree = phy_tree(phy)
+	  if(!is.null(tree)){
+		tree = phy_tree(phy)
+	  }
   }
   sim.otu.tab = otu.tab
   sample.names = rownames(sim.otu.tab)
@@ -25,7 +33,11 @@ function(otu.tab,tax.tab,tree,X,Y,screening.rank = 'Family',target.rank='Species
 	sim.otu.tab = t(otu.tab)
 	sample.names = rownames(sim.otu.tab)
   }
-  sim.otu.tab.rela= relative.abundance(sim.otu.tab)
+  if(is.count.otu.tab){
+	sim.otu.tab.rela= relative.abundance(sim.otu.tab)
+  }else{
+	sim.otu.tab.rela= sim.otu.tab
+  }
   if(is.null(X)){
     cov = NULL
   }else{

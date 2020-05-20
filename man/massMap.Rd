@@ -8,13 +8,13 @@ This function detects the trait-associated taxa at the specified taget rank. We 
 }
 \usage{
 ##binary or continuous trait
-massMap(X, Y, otu.tab, tax.tab, tree, outcome.trait = outcome.traits,
-	screening.rank = "family", target.rank = ranks,
+massMap(X, Y, otu.tab, is.count.otu.tab = TRUE, tax.tab, tree, 
+	outcome.trait = outcome.traits, screening.rank = "Family", target.rank = ranks, 
 	alpha = 0.05, n.perm = 1e4)
 ##survival trait
-massMap(X, obstime, delta, otu.tab, tax.tab, tree, outcome.trait = outcome.traits,
-	screening.rank= "family", target.rank= ranks,
-	alpha=0.05,n.perm=1e4)
+massMap(X, obstime, delta, otu.tab, is.count.otu.tab = TRUE, tax.tab, tree,
+   outcome.trait = outcome.traits, screening.rank= "Family", target.rank= ranks,
+   alpha=0.05,n.perm=1e4)
 
 outcome.traits
 #c("binary", "continuous", "survival")
@@ -36,6 +36,9 @@ A numeric vector of the status indicator for the survival outcome trait with len
 }
   \item{otu.tab}{
 The taxonomic table of the microbiome data. Each row represents the taxonomy alignment of each taxon on Kingdom (Domain), Phylum, Class, Order, Family, Genus and Species respectively. Best if it is a class otu_table from package "phyloseq".
+}
+  \item{is.count.otu.tab}{
+  An indicator of whether the OTU table contains the count data or relative abundance data for OTUs. 
 }
   \item{tax.tab}{
 The OTU table of the microbiome data. Each row represents a subject and each column represents the OTU. Best if it is a class taxonomyTable from package "phyloseq".
@@ -85,11 +88,8 @@ Numver of permutations in order to calculate p-values. The default setting 1e4 i
 }
 }
 \references{
-HU J, Koh H, He L, Liu M, Blaser M J, Li H (2018). A two-stage microbial association mapping framework with advanced FDR control. (submitted)
+Hu, Jiyuan, Hyunwook Koh, Linchen He, Menghan Liu, Martin J. Blaser, and Huilin Li. "A two-stage microbial association mapping framework with advanced FDR control." Microbiome 6, no. 1 (2018): 131.
 
-Koh H, Livanos A E, Blaser M J, Li H (2018). A highly adaptive microbiome based association test for survival traits. BMC genomics, 19(1), 210.
-
-Koh H, Blaser M J and Li H (2017). A powerful microbiome-based association test and a microbial taxa discovery framework for comprehensive association mapping. Microbiome, 5(1), p.45.
 }
 \author{
 Jiyuan Hu, Hyunwook Koh, Linchen He, Menghan Liu, Martin J. Blaser, Huilin Li.
@@ -108,14 +108,16 @@ tax.tab = tax_table(phy)
 tree = phy_tree(phy)
 ############
 # Not run:
-#res = massMap(X=X, Y=Y,otu.tab=otu.tab,tax.tab=tax.tab,tree=tree,outcome.trait="binary",
-#              screening.rank = "Family", target.rank="Species",alpha=0.05,n.perm=1e2)
+#res = massMap(X=X, Y=Y,otu.tab=otu.tab,is.count.otu.tab=TRUE, 
+#  tax.tab=tax.tab,tree=tree,outcome.trait="binary",
+#  screening.rank = "Family", target.rank="Species",alpha=0.05,n.perm=1e2)
 #res$res.screening ##The group association test at the screening rank
 #res$res.target ##The microbial association test at the target rank
 ###
 
 ###Illustration 2: survival trait
-##It requires the observed survival time (obstime) and the event indicator (delta) when running massMap for the surval trait
+##The observed survival time (obstime) and the event indicator (delta) are required 
+##when running massMap for the surval trait
 data("MiSurv.Data",package= 'OMiSA')
 otu.tab <- otu_table(MiSurv.Data)
 tax.tab <- tax_table(MiSurv.Data)
@@ -126,9 +128,10 @@ delta <- as.numeric(unlist(map[,2]))
 X = data.frame(map[,3:4])
 ############
 # Not run:
-#res.Surv = massMap(X=X, obstime = obstime,delta= delta,otu.tab=otu.tab,tax.tab=tax.tab,
-#                   tree=tree,outcome.trait="survival",screening.rank = "Family",
-#                   target.rank="Species",alpha=0.05,n.perm=1e4)
+#res.Surv = massMap(X=X, obstime = obstime,delta= delta,otu.tab=otu.tab, is.count.otu.tab=TRUE, 
+#	tax.tab=tax.tab, tree=tree,outcome.trait="survival",
+#   screening.rank = "Family",target.rank="Species",alpha=0.05,n.perm=1e4)
+                   
 #res$res.screening ##The group association test at the screening rank
 #res$res.target ##The microbial association test at the target rank
 

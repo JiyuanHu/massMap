@@ -12,7 +12,7 @@ This package is developed to powerfully discover trait-associated taxa at the ta
 Package: \tab massMap\cr
 Type: \tab Package\cr
 Version: \tab 2.0\cr
-Date: \tab 2018-04-04\cr
+Date: \tab 2020-05-19\cr
 License: \tab GPL (>= 2)\cr
 }
 }
@@ -23,11 +23,7 @@ Jiyuan Hu, Hyunwook Koh, Linchen He, Menghan Liu, Martin J. Blaser, Huilin Li.
 Maintainer: Jiyuan Hu <Jiyuan.Hu@nyumc.org>
 }
 \references{
-HU J, Koh H, He L, Liu M, Blaser M J, Li H (2018). A two-stage microbial association mapping framework with advanced FDR control. (submitted)
-
-Koh H, Livanos A E, Blaser M J, Li H (2018). A highly adaptive microbiome based association test for survival traits. BMC genomics, 19(1), 210.
-
-Koh H, Blaser M J and Li H (2017). A powerful microbiome-based association test and a microbial taxa discovery framework for comprehensive association mapping. Microbiome, 5(1), p.45.
+Hu, Jiyuan, Hyunwook Koh, Linchen He, Menghan Liu, Martin J. Blaser, and Huilin Li. "A two-stage microbial association mapping framework with advanced FDR control." Microbiome 6, no. 1 (2018): 131.
 
 }
 \keyword{package}
@@ -44,14 +40,16 @@ tax.tab = tax_table(phy)
 tree = phy_tree(phy)
 ############
 # Not run:
-#res = massMap(X=X, Y=Y,otu.tab=otu.tab,tax.tab=tax.tab,tree=tree,outcome.trait="binary",
-#              screening.rank = "Family", target.rank="Species",alpha=0.05,n.perm=1e2)
+#res = massMap(X=X, Y=Y,otu.tab=otu.tab,is.count.otu.tab=TRUE, 
+#  	tax.tab=tax.tab,tree=tree,outcome.trait="binary",
+#  	screening.rank = "Family", target.rank="Species",alpha=0.05,n.perm=1e2)
 #res$res.screening ##The group association test at the screening rank
 #res$res.target ##The microbial association test at the target rank
 ###
 
 ###Illustration 2: survival trait
-##It requires the observed survival time (obstime) and the event indicator (delta) when running massMap for the surval trait
+##The observed survival time (obstime) and the event indicator (delta) are required 
+##when running massMap for the surval trait
 data("MiSurv.Data",package= 'OMiSA')
 otu.tab <- otu_table(MiSurv.Data)
 tax.tab <- tax_table(MiSurv.Data)
@@ -62,9 +60,10 @@ delta <- as.numeric(unlist(map[,2]))
 X = data.frame(map[,3:4])
 ############
 # Not run:
-#res.Surv = massMap(X=X, obstime = obstime,delta= delta,otu.tab=otu.tab,tax.tab=tax.tab,
-#                   tree=tree,outcome.trait="survival",screening.rank = "Family",
-#                   target.rank="Species",alpha=0.05,n.perm=1e4)
+#res.Surv = massMap(X=X, obstime = obstime,delta= delta,otu.tab=otu.tab, is.count.otu.tab=TRUE, 
+#	tax.tab=tax.tab, tree=tree,outcome.trait="survival",
+#   screening.rank = "Family",target.rank="Species",alpha=0.05,n.perm=1e4)
+                   
 #res$res.screening ##The group association test at the screening rank
 #res$res.target ##The microbial association test at the target rank
 

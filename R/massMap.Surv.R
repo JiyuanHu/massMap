@@ -1,5 +1,5 @@
 massMap.Surv <-
-function(X=NULL,obstime,delta,otu.tab,tax.tab,tree,
+function(X=NULL,obstime,delta,otu.tab,is.count.otu.tab,tax.tab,tree,
 	screening.rank= 'Family',target.rank= ranks,alpha=0.05,n.perm=1e4){
   #set.seed(1234)
   #mode='OMiAT'
